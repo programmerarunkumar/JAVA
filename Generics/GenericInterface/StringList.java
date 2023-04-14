@@ -1,4 +1,4 @@
-package Generics.GenericsInterface;
+package Generics.GenericInterface;
 
 import java.util.ArrayList;
 import java.util.List;

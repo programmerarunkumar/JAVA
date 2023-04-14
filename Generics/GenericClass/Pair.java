@@ -1,4 +1,4 @@
-package Generics.GenericsClass;
+package Generics.GenericClass;
 
 public class Pair<keyType, valueType> {
 

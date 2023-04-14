@@ -1,4 +1,4 @@
-package Generics.GenericsInterface;
+package Generics.GenericInterface;
 
 public interface CustomList<valueType> {
 
