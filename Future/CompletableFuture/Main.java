@@ -6,26 +6,34 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        thenAppyly();
+
+    }
+
+    //Both SupplyAsync and thenApply will execute in Asynchronously
+    private static void thenAppyly() throws Exception {
+
+        int n = 10;
+        CompletableFuture<Integer> add = CompletableFuture.supplyAsync(() -> {
+            int sum = 0;
+            for (int i=0; i<n; i++){
+               sum = sum + i;
             }
-            return "Result";
+            return sum;
+        });
+        add.thenAccept(sum -> {
+            System.out.println("Sum : " + sum);
         });
 
-        future1.thenAccept(input -> {
-            System.out.println("future1 : " + input);
+        CompletableFuture<Integer> div = add.thenApply(sum -> sum/n);
+        div.thenAccept(result -> {
+            System.out.println("Divide : " + result);
         });
 
-        CompletableFuture<Integer> future2 = future1.thenApply(input -> input.length() * 2);
-
-        future2.thenAccept(input -> {
-            System.out.println("future2 : " + input);
+        CompletableFuture<Integer> mod = add.thenApply(sum -> sum%n);
+        mod.thenAccept(result -> {
+            System.out.println("Mod " + result);
         });
-
-        System.out.println("future1 : " + future1.get() + " future2 : " + future2.get());
 
     }
 
