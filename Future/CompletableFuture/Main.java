@@ -25,8 +25,8 @@ public class Main {
             System.out.println("Sum : " + sum);
         });
 
-        CompletableFuture<Integer> div = add.thenApply(sum -> sum/n);
-        div.thenAccept(result -> {
+        CompletableFuture<Integer> divide = add.thenApply(sum -> sum/n);
+        divide.thenAccept(result -> {
             System.out.println("Divide : " + result);
         });
 
