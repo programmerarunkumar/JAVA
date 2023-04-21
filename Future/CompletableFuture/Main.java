@@ -40,7 +40,7 @@ public class Main {
 
     }
 
-    // thenCompose -> used  when we need to chain dependent asynchronous tasks
+    // thenCompose -> used  when we need to chain dependent asynchronous tasks.
 
     private static void thenCompose() throws Exception {
 
