@@ -45,7 +45,7 @@ public class Main {
     private static void thenCompose() throws Exception {
 
         int n = 10;
-        CompletableFuture<Integer> sumDivide = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<Void> sumDivide = CompletableFuture.supplyAsync(() -> {
             int sum = 0;
             for (int i=0; i<n; i++){
                 sum = sum + i;
@@ -53,9 +53,7 @@ public class Main {
             return sum;
         }).thenCompose(sum -> CompletableFuture.supplyAsync(() -> {
             return sum/n;
-        }));
-
-        sumDivide.thenAccept(result -> {
+        })).thenAccept(result -> {
             System.out.println("Result : " + result);
         });
 
