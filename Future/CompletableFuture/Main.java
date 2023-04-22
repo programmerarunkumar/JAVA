@@ -20,6 +20,7 @@ public class Main {
     private static void transform() throws Exception {
         thenApply();
         applyToEither();
+        handle();
     }
 
     private static void chaining() throws Exception {
@@ -101,6 +102,31 @@ public class Main {
 
         future1.applyToEither(future2, input -> {
             return "Response From " + input;
+        }).thenAccept(result -> {
+            System.out.println("Result : " + result);
+        });
+
+    }
+
+    //handle -> transformation on the CompletableFuture result. Also, it handles the error from the CompletableFuture
+    private static void handle() throws Exception {
+
+        int n = 10;
+        CompletableFuture<Integer> add = CompletableFuture.supplyAsync(() -> {
+            int sum = 0;
+            for(int i=0; i<n; i++){
+                sum = sum + i;
+            }
+            return sum;
+        });
+
+        add.handle((result, error) -> {
+            if(error != null){
+                System.out.println("Exception : " + error.getMessage());
+                return null;
+            }else {
+                return result/n;
+            }
         }).thenAccept(result -> {
             System.out.println("Result : " + result);
         });
