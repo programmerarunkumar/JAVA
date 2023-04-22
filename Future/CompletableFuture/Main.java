@@ -11,6 +11,7 @@ public class Main {
         chaining();
         combine();
         logging();
+        exception();
     }
 
     private static void create() throws Exception {
@@ -37,6 +38,10 @@ public class Main {
     private static void logging() throws Exception {
         thenAccept();
         whenComplete();
+    }
+
+    private static void exception() throws Exception {
+        exceptionally();
     }
 
     //SupplyAsync -> to run the task asynchronously.
@@ -272,6 +277,19 @@ public class Main {
             }else {
                 System.out.println("Result : " + result);
             }
+        });
+
+    }
+
+    private static void exceptionally() throws Exception {
+
+        CompletableFuture.supplyAsync(() -> {
+            return 10/0;
+        }).exceptionally(exception -> {
+            System.out.println("Exception : " + exception.getMessage());
+            return 0;
+        }).thenAccept(result -> {
+            System.out.println("Result : " + result);
         });
 
     }
