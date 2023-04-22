@@ -14,6 +14,7 @@ public class Main {
 
     private static void create() throws Exception {
         supplyAsync();
+        runAsync();
     }
 
     private static void transform() throws Exception {
@@ -41,6 +42,20 @@ public class Main {
             return sum;
         }).thenAccept(result -> {
             System.out.println("Result : " + result);
+        });
+
+    }
+
+    //runAsync -> to run the task asynchronously without getting the result
+    private static void runAsync() throws Exception {
+
+        int n = 10;
+        CompletableFuture<Void> addFuture = CompletableFuture.runAsync(() -> {
+            int sum = 0;
+            for(int i=0; i<n; i++){
+                sum = sum + i;
+            }
+            System.out.println("Sum : " + sum);
         });
 
     }
