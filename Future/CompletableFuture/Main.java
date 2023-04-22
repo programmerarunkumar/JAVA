@@ -281,6 +281,7 @@ public class Main {
 
     }
 
+    //exceptionally -> used to handle the exception.
     private static void exceptionally() throws Exception {
 
         CompletableFuture.supplyAsync(() -> {
