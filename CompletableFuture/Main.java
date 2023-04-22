@@ -1,4 +1,4 @@
-package Future.CompletableFuture;
+package CompletableFuture;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
