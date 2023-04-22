@@ -10,6 +10,7 @@ public class Main {
         transform();
         chaining();
         combine();
+        logging();
     }
 
     private static void create() throws Exception {
@@ -31,6 +32,11 @@ public class Main {
         thenCombine();
         allOf();
         anyOf();
+    }
+
+    private static void logging() throws Exception {
+        thenAccept();
+        whenComplete();
     }
 
     //SupplyAsync -> to run the task asynchronously.
@@ -226,6 +232,46 @@ public class Main {
            return "Response from " + result;
         }).thenAccept(result -> {
             System.out.println("Result : " + result);
+        });
+
+    }
+
+    //thenAccept -> to handle the logging only when the CompletableFuture is completed successfully.
+    private static void thenAccept() throws Exception {
+
+        int n = 10;
+        CompletableFuture<Integer> add = CompletableFuture.supplyAsync(() -> {
+            int sum = 0;
+            for (int i=0; i<n; i++){
+                sum = sum + i;
+            }
+            return sum;
+        });
+
+        add.thenAccept(result -> {
+            System.out.println("Result : " + result);
+        });
+
+    }
+
+    //whenComplete -> to handle the logging in both success and failure cases when the  CompletableFuture is completed.
+    private static void whenComplete() throws Exception {
+
+        int n = 10;
+        CompletableFuture<Integer> add = CompletableFuture.supplyAsync(() -> {
+            int sum = 0;
+            for(int i=0; i<n; i++){
+                sum = sum + i;
+            }
+            return sum;
+        });
+
+        add.whenComplete((result, exception) -> {
+            if(exception != null){
+                System.out.println("Exception : " + exception.getMessage());
+            }else {
+                System.out.println("Result : " + result);
+            }
         });
 
     }
