@@ -29,6 +29,7 @@ public class Main {
 
     private static void combine() throws Exception {
         thenCombine();
+        allOf();
     }
 
     //SupplyAsync -> to run the task asynchronously.
@@ -152,23 +153,55 @@ public class Main {
     }
 
     //thenCombine -> used to combine the results of two independent CompletableFutures.
+    //TODO - How to combine more than two CompletableFuture and perform operation on their results ?
     private static void thenCombine() throws Exception {
 
         int a = 10;
         int b = 20;
-        CompletableFuture<Integer> sumFuture = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<Integer> addFuture = CompletableFuture.supplyAsync(() -> {
             return a + b;
         });
 
-        CompletableFuture<Integer> productFuture = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<Integer> multiplyFuture = CompletableFuture.supplyAsync(() -> {
           return a * b;
         });
 
         BiFunction<Integer, Integer, Integer> combineFunction = (sum, product) -> sum + product;
 
-        CompletableFuture<Integer> combinedFuture = sumFuture.thenCombine(productFuture, combineFunction);
+        CompletableFuture<Integer> combinedFuture = addFuture.thenCombine(multiplyFuture, combineFunction);
         combinedFuture.thenAccept(result -> {
+            System.out.println("Add : " + addFuture.join());
+            System.out.println("Multiply : " + multiplyFuture.join());
             System.out.println("Result : " + result);
+        });
+
+    }
+
+    //allOf -> used to combine all the CompletableFuture to know its completion status
+    private static void allOf() throws Exception {
+
+        int a = 10;
+        int b = 20;
+
+        CompletableFuture<Integer> addFuture = CompletableFuture.supplyAsync(() -> {
+            return a + b;
+        });
+
+        CompletableFuture<Integer> multiplyFuture = CompletableFuture.supplyAsync(() -> {
+            return a * b;
+        });
+
+        CompletableFuture<Integer> divisionFuture = CompletableFuture.supplyAsync(() -> {
+            return a / b;
+        });
+
+        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(addFuture, multiplyFuture, divisionFuture);
+        combinedFuture.thenAccept(v -> {
+            System.out.println("Add : " + addFuture.join());
+            System.out.println("Multiply : " + multiplyFuture.join());
+            System.out.println("Division : " + divisionFuture.join());
+
+            System.out.println("Result : "+ (addFuture.join() + multiplyFuture.join() + divisionFuture.join()));
         });
 
     }
