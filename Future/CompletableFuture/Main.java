@@ -1,20 +1,23 @@
 package Future.CompletableFuture;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        thenAppyly();
+        thenApply();
         thenCompose();
+        thenCombine();
 
     }
 
     //SupplyAsync -> to run the task asynchronously.
-    //thenApply -> transformation of the previous result.
 
-    private static void thenAppyly() throws Exception {
+
+    //thenApply -> transformation of the previous result.
+    private static void thenApply() throws Exception {
 
         int n = 10;
         CompletableFuture<Integer> add = CompletableFuture.supplyAsync(() -> {
@@ -41,7 +44,6 @@ public class Main {
     }
 
     // thenCompose -> used  when we need to chain dependent asynchronous tasks.
-
     private static void thenCompose() throws Exception {
 
         int n = 10;
@@ -54,6 +56,28 @@ public class Main {
         }).thenCompose(sum -> CompletableFuture.supplyAsync(() -> {
             return sum/n;
         })).thenAccept(result -> {
+            System.out.println("Result : " + result);
+        });
+
+    }
+
+    //thenCombine -> used to combine the results of two independent CompletableFutures.
+    private static void thenCombine() throws Exception {
+
+        int a = 10;
+        int b = 20;
+        CompletableFuture<Integer> sumFuture = CompletableFuture.supplyAsync(() -> {
+            return a + b;
+        });
+
+        CompletableFuture<Integer> productFuture = CompletableFuture.supplyAsync(() -> {
+          return a * b;
+        });
+
+        BiFunction<Integer, Integer, Integer> combineFunction = (sum, product) -> sum + product;
+
+        CompletableFuture<Integer> combinedFuture = sumFuture.thenCombine(productFuture, combineFunction);
+        combinedFuture.thenAccept(result -> {
             System.out.println("Result : " + result);
         });
 
