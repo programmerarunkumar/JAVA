@@ -19,6 +19,7 @@ public class Main {
 
     private static void transform() throws Exception {
         thenApply();
+        applyToEither();
     }
 
     private static void chaining() throws Exception {
@@ -28,7 +29,6 @@ public class Main {
     private static void combine() throws Exception {
         thenCombine();
     }
-
 
     //SupplyAsync -> to run the task asynchronously.
     private static void supplyAsync() throws Exception{
@@ -60,7 +60,7 @@ public class Main {
 
     }
 
-    //thenApply -> transformation of the previous result.
+    //thenApply -> transformation on the CompletableFuture result.
     private static void thenApply() throws Exception {
 
         int n = 10;
@@ -83,6 +83,26 @@ public class Main {
         CompletableFuture<Integer> mod = add.thenApply(sum -> sum%n);
         mod.thenAccept(result -> {
             System.out.println("Mod " + result);
+        });
+
+    }
+
+    //applyToEither -> transformation on the first completed CompletableFuture result.
+    //TODO -  How to applyToEither() for more than two completableFuture ?
+    private static void applyToEither() throws Exception {
+
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
+            return "Service1";
+        });
+
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+            return "Service2";
+        });
+
+        future1.applyToEither(future2, input -> {
+            return "Response From " + input;
+        }).thenAccept(result -> {
+            System.out.println("Result : " + result);
         });
 
     }
