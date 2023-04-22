@@ -30,6 +30,7 @@ public class Main {
     private static void combine() throws Exception {
         thenCombine();
         allOf();
+        anyOf();
     }
 
     //SupplyAsync -> to run the task asynchronously.
@@ -200,8 +201,31 @@ public class Main {
             System.out.println("Add : " + addFuture.join());
             System.out.println("Multiply : " + multiplyFuture.join());
             System.out.println("Division : " + divisionFuture.join());
-
             System.out.println("Result : "+ (addFuture.join() + multiplyFuture.join() + divisionFuture.join()));
+        });
+
+    }
+
+    //anyOf -> used to combine multiple CompletableFutures and return the result of the first completed CompletableFuture.
+    private static void anyOf() throws Exception {
+
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
+            return "Service1";
+        });
+
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+           return "Service2";
+        });
+
+        CompletableFuture<String> future3 = CompletableFuture.supplyAsync(() -> {
+            return "Service3";
+        });
+
+        CompletableFuture<Object> anyOf = CompletableFuture.anyOf(future1, future2, future3);
+        anyOf.thenApply(result -> {
+           return "Response from " + result;
+        }).thenAccept(result -> {
+            System.out.println("Result : " + result);
         });
 
     }
