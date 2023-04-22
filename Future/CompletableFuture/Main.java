@@ -7,6 +7,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        supplyAsync();
         thenApply();
         thenCompose();
         thenCombine();
@@ -14,6 +15,20 @@ public class Main {
     }
 
     //SupplyAsync -> to run the task asynchronously.
+    private static void supplyAsync() throws Exception{
+
+        int n = 10;
+        CompletableFuture.supplyAsync(() -> {
+            int sum = 0;
+            for(int i=0; i<n; i++){
+                sum = sum + i;
+            }
+            return sum;
+        }).thenAccept(result -> {
+            System.out.println("Result : " + result);
+        });
+
+    }
 
 
     //thenApply -> transformation of the previous result.
