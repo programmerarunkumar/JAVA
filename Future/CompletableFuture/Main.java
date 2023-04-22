@@ -6,13 +6,28 @@ import java.util.function.BiFunction;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
-        supplyAsync();
-        thenApply();
-        thenCompose();
-        thenCombine();
-
+        create();
+        transform();
+        chaining();
+        combine();
     }
+
+    private static void create() throws Exception {
+        supplyAsync();
+    }
+
+    private static void transform() throws Exception {
+        thenApply();
+    }
+
+    private static void chaining() throws Exception {
+        thenCompose();
+    }
+
+    private static void combine() throws Exception {
+        thenCombine();
+    }
+
 
     //SupplyAsync -> to run the task asynchronously.
     private static void supplyAsync() throws Exception{
@@ -29,7 +44,6 @@ public class Main {
         });
 
     }
-
 
     //thenApply -> transformation of the previous result.
     private static void thenApply() throws Exception {
