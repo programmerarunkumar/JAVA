@@ -1,4 +1,4 @@
-package FunctionalInterface.Math;
+package LamdaExpression.Math;
 
 public class Main {
 

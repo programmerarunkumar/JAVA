@@ -1,4 +1,4 @@
-package FunctionalInterface.Math;
+package LamdaExpression.Math;
 
 @FunctionalInterface
 public interface Add {
