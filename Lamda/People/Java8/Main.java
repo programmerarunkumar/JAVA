@@ -1,7 +1,7 @@
-package LamdaExpression.People.Java7;
+package Lamda.People.Java8;
 
-import LamdaExpression.People.Condition;
-import LamdaExpression.People.People;
+import Lamda.People.Condition;
+import Lamda.People.People;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,30 +19,15 @@ public class Main {
 
         System.out.println("All the People");
         //Print all the People
-        printConditionally(peopleList, new Condition() {
-            @Override
-            public boolean conditionSatisfied(People people) {
-                return true;
-            }
-        });
+        printConditionally(peopleList, (people)->true);
 
         System.out.println("People with age < 25");
         //Age < 25
-        printConditionally(peopleList, new Condition() {
-            @Override
-            public boolean conditionSatisfied(People people) {
-                return people.getAge() < 25;
-            }
-        });
+        printConditionally(peopleList, (people)->people.getAge() < 25);
 
         System.out.println("People with name starts with S");
         //Name starts with S
-        printConditionally(peopleList, new Condition() {
-            @Override
-            public boolean conditionSatisfied(People people) {
-                return people.getName().startsWith("S");
-            }
-        });
+        printConditionally(peopleList, (people)->people.getName().startsWith("S"));
 
     }
 

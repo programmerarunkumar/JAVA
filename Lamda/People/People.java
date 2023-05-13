@@ -1,4 +1,4 @@
-package LamdaExpression.People;
+package Lamda.People;
 
 public class People {
 
